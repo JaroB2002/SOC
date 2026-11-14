@@ -102,10 +102,10 @@ button {
   gap: 1rem;
   height: var(--nav-h);
   padding: 0 clamp(1rem, 3vw, 2rem);
-  background: transparent;
+  background: rgba(200, 255, 0, 0.92);
   color: var(--ink);
-  mix-blend-mode: difference;
-  color: #fff;
+  border-bottom: var(--rule);
+  backdrop-filter: blur(8px);
 }
 
 .nav__brand {
@@ -119,7 +119,7 @@ button {
 }
 
 .nav__brand .mark {
-  background: #fff;
+  background: var(--ink);
   width: 0.65rem;
   height: 0.65rem;
   margin-right: 0;
@@ -995,6 +995,19 @@ button {
   border-bottom: 2px solid var(--ink);
 }
 
+.reveal {
+  opacity: 0;
+  transform: translateY(20px);
+  transition:
+    opacity 0.7s var(--ease-out),
+    transform 0.7s var(--ease-out);
+}
+
+.reveal.is-in {
+  opacity: 1;
+  transform: none;
+}
+
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
@@ -1005,5 +1018,9 @@ button {
   .hero__lede,
   .hero__actions {
     animation: none !important;
+  }
+  .reveal {
+    opacity: 1;
+    transform: none;
   }
 }

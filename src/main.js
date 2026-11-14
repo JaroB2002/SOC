@@ -463,25 +463,23 @@ function initCounters() {
 
 function initReveals() {
   if (reducedMotion) return
-  const els = document.querySelectorAll('.display, .why__item, .module, .roles__list li, .identity')
-  els.forEach((el, i) => {
-    el.style.opacity = '0'
-    el.style.transform = 'translateY(24px)'
-    el.style.transition = `opacity 0.7s cubic-bezier(0.16,1,0.3,1) ${(i % 6) * 40}ms, transform 0.7s cubic-bezier(0.16,1,0.3,1) ${(i % 6) * 40}ms`
-  })
+  const els = document.querySelectorAll('.display, .why__item, .module, .roles__list li')
   const io = new IntersectionObserver(
     (entries) => {
       entries.forEach((entry) => {
         if (entry.isIntersecting) {
-          entry.target.style.opacity = '1'
-          entry.target.style.transform = 'none'
+          entry.target.classList.add('is-in')
           io.unobserve(entry.target)
         }
       })
     },
-    { threshold: 0.12, rootMargin: '0px 0px -6% 0px' },
+    { threshold: 0.08, rootMargin: '0px 0px -4% 0px' },
   )
-  els.forEach((el) => io.observe(el))
+  els.forEach((el, i) => {
+    el.classList.add('reveal')
+    el.style.transitionDelay = `${(i % 6) * 40}ms`
+    io.observe(el)
+  })
 }
 
 whenFontsReady().then(() => {
