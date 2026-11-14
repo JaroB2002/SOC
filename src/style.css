@@ -231,6 +231,11 @@ button {
   position: relative;
   z-index: 2;
   max-width: 18ch;
+  pointer-events: none;
+}
+
+.hero__content .btn {
+  pointer-events: auto;
 }
 
 .hero__brand {

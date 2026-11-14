@@ -80,9 +80,11 @@ function initHeroCanvas() {
   resize()
   draw()
 
+  const hero = canvas.closest('.hero')
+
   window.addEventListener('resize', resize)
-  if (!reducedMotion) {
-    canvas.addEventListener('pointermove', (e) => {
+  if (!reducedMotion && hero) {
+    hero.addEventListener('pointermove', (e) => {
       const rect = canvas.getBoundingClientRect()
       target.x = (e.clientX - rect.left) / rect.width
       target.y = (e.clientY - rect.top) / rect.height
