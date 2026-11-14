@@ -1,0 +1,300 @@
+<!doctype html>
+<html lang="nl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>School of Creativity — Thomas More Mechelen</title>
+    <meta
+      name="description"
+      content="Van student tot conceptual creative thinker. Eén jaar fulltime creatieve training in Mechelen. Real briefs. Real agencies. Real portfolio."
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Anybody:wdth,wght@50..150,200..900&family=Syne:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/src/style.css" />
+  </head>
+  <body>
+    <div class="noise" aria-hidden="true"></div>
+
+    <header class="nav">
+      <a class="nav__brand" href="#top">SOC</a>
+      <nav class="nav__links" aria-label="Hoofdmenu">
+        <a href="#manifesto">Manifesto</a>
+        <a href="#programme">Programme</a>
+        <a href="#roles">Roles</a>
+        <a href="#apply">Apply</a>
+      </nav>
+      <a class="nav__cta" href="https://schoolofcreativity.be/" target="_blank" rel="noopener"
+        >Secure seat</a
+      >
+    </header>
+
+    <main id="top">
+      <!-- HERO: one composition — brand, headline, sentence, CTA, dominant kinetic field -->
+      <section class="hero" aria-label="School of Creativity">
+        <canvas id="hero-canvas" class="hero__canvas" aria-hidden="true"></canvas>
+        <div class="hero__veil" aria-hidden="true"></div>
+        <div class="hero__content">
+          <p class="hero__brand">School of Creativity</p>
+          <h1 class="hero__title">
+            <span class="hero__line">Think</span>
+            <span class="hero__line hero__line--accent">louder.</span>
+          </h1>
+          <p class="hero__lede">
+            Van student tot conceptual creative thinker — één jaar, echte briefs, echte
+            agencies.
+          </p>
+          <div class="hero__actions">
+            <a class="btn btn--ink" href="#programme">Bekijk het programma</a>
+            <a
+              class="btn btn--ghost"
+              href="https://schoolofcreativity.be/"
+              target="_blank"
+              rel="noopener"
+              >Apply now</a
+            >
+          </div>
+        </div>
+      </section>
+
+      <div class="marquee marquee--lime" aria-hidden="true">
+        <div class="marquee__track">
+          <span>CREATIVE THINKING</span><span>REAL BRIEFS</span><span>AGENCY DRILLS</span
+          ><span>PORTFOLIO</span><span>GRADUATION NIGHT</span><span>CREATIVE THINKING</span
+          ><span>REAL BRIEFS</span><span>AGENCY DRILLS</span><span>PORTFOLIO</span
+          ><span>GRADUATION NIGHT</span>
+        </div>
+      </div>
+
+      <!-- MANIFESTO -->
+      <section id="manifesto" class="manifesto">
+        <div class="manifesto__kinetic" aria-hidden="true">
+          <div class="wave-grid" id="wave-grid"></div>
+        </div>
+        <div class="manifesto__copy">
+          <p class="eyebrow">01 — Manifesto</p>
+          <h2 class="display">
+            Creativity isn’t talent.<br />
+            <em>It’s a muscle.</em>
+          </h2>
+          <p class="manifesto__text">
+            Wij geloven dat creativiteit vooruitgang drijft — voor merken, business en
+            samenleving. Je leert strategische inzichten omzetten in concepten die opvallen
+            en impact maken. Focus. Feedback. Deliberate practice.
+          </p>
+        </div>
+      </section>
+
+      <!-- GLITCH STATEMENT -->
+      <section class="statement" aria-label="Kernboodschap">
+        <canvas id="glitch-canvas" class="statement__canvas" aria-hidden="true"></canvas>
+        <p class="statement__sub">No exams. No theory for theory’s sake.</p>
+        <p class="statement__tag">Learning by doing is our motto.</p>
+      </section>
+
+      <!-- PROGRAMME MODULES -->
+      <section id="programme" class="programme">
+        <header class="section-head">
+          <p class="eyebrow">02 — Programme</p>
+          <h2 class="display">Dive into the<br /><span class="text-orange">creative pool.</span></h2>
+          <p class="section-lede">
+            26 weken inspiratie, workshops en coaching. Plus 10 weken internship bij Belgische
+            creative agencies.
+          </p>
+        </header>
+
+        <ol class="modules">
+          <li class="module" data-module>
+            <button class="module__trigger" type="button" aria-expanded="true">
+              <span class="module__num">01</span>
+              <span class="module__title">Conceptual Creative Thinking — Theory</span>
+              <span class="module__weeks">6 wkn</span>
+              <span class="module__icon" aria-hidden="true"></span>
+            </button>
+            <div class="module__panel">
+              <p>
+                Je leert niet creatief te zijn — je wordt het. Technieken, immersie in sterk
+                creatief werk, inspiratiesessies en workshops. Altijd gekoppeld aan echte
+                client briefings.
+              </p>
+            </div>
+          </li>
+          <li class="module" data-module>
+            <button class="module__trigger" type="button" aria-expanded="false">
+              <span class="module__num">02</span>
+              <span class="module__title">Practice &amp; Portfolio</span>
+              <span class="module__weeks">12 wkn</span>
+              <span class="module__icon" aria-hidden="true"></span>
+            </button>
+            <div class="module__panel">
+              <p>
+                We vormen onze eigen creative studio. Briefings met teammates, weekly spark
+                days, craft én pitch naar de client. Elke week review op idea én execution.
+              </p>
+            </div>
+          </li>
+          <li class="module" data-module>
+            <button class="module__trigger" type="button" aria-expanded="false">
+              <span class="module__num">03</span>
+              <span class="module__title">Creative Drills</span>
+              <span class="module__weeks">6 wkn</span>
+              <span class="module__icon" aria-hidden="true"></span>
+            </button>
+            <div class="module__panel">
+              <p>
+                Elke week een andere Belgische agency. Echte briefing, echte client. De
+                Creative Director reviewt jouw werk. Zo voel je hoe de industry beweegt.
+              </p>
+            </div>
+          </li>
+          <li class="module" data-module>
+            <button class="module__trigger" type="button" aria-expanded="false">
+              <span class="module__num">04</span>
+              <span class="module__title">Creative Internship</span>
+              <span class="module__weeks">10 wkn</span>
+              <span class="module__icon" aria-hidden="true"></span>
+            </button>
+            <div class="module__panel">
+              <p>
+                Real-world experience bij Belgium’s creative agencies. Creative directors en
+                seniors coachen je tot je portfolio klaar is voor Graduation Night.
+              </p>
+            </div>
+          </li>
+        </ol>
+      </section>
+
+      <div class="marquee marquee--orange marquee--reverse" aria-hidden="true">
+        <div class="marquee__track">
+          <span>COPYWRITER</span><span>ART DIRECTOR</span><span>CONCEPTUAL CREATIVE</span
+          ><span>CONTENT CREATOR</span><span>CREATIVE THINKER</span><span>COPYWRITER</span
+          ><span>ART DIRECTOR</span><span>CONCEPTUAL CREATIVE</span><span>CONTENT CREATOR</span
+          ><span>CREATIVE THINKER</span>
+        </div>
+      </div>
+
+      <!-- ROLES / AFTER -->
+      <section id="roles" class="roles">
+        <div class="roles__left">
+          <p class="eyebrow">03 — After graduation</p>
+          <h2 class="display">Your ticket<br />into the<br /><em>industry.</em></h2>
+        </div>
+        <ul class="roles__list">
+          <li>Copywriter</li>
+          <li>Art director</li>
+          <li>Conceptual creative</li>
+          <li>Creative thinker</li>
+          <li>Content creator</li>
+          <li>Concept provider</li>
+          <li>Creative solution maker</li>
+        </ul>
+      </section>
+
+      <!-- FACTS STRIP -->
+      <section class="facts" aria-label="Praktisch">
+        <article class="fact">
+          <span class="fact__value" data-count="1">0</span>
+          <span class="fact__label">jaar fulltime</span>
+        </article>
+        <article class="fact">
+          <span class="fact__value" data-count="60">0</span>
+          <span class="fact__label">ECTS credits</span>
+        </article>
+        <article class="fact">
+          <span class="fact__value" data-count="24">0</span>
+          <span class="fact__label">talenten / jaar</span>
+        </article>
+        <article class="fact">
+          <span class="fact__value fact__value--euro" data-count="3300">0</span>
+          <span class="fact__label">tuition 26/27</span>
+        </article>
+      </section>
+
+      <!-- WHY -->
+      <section class="why">
+        <p class="eyebrow">04 — Why SOC</p>
+        <div class="why__grid">
+          <article class="why__item why__item--a">
+            <h3>Industry needs you</h3>
+            <p>
+              Get trained by top creatives. Step into a career where your talent fuels brands
+              and agencies alike.
+            </p>
+          </article>
+          <article class="why__item why__item--b">
+            <h3>All minds welcome</h3>
+            <p>
+              Dream of a creative job but your degree blocks the door? Train your creative
+              mind until concepting becomes automatic.
+            </p>
+          </article>
+          <article class="why__item why__item--c">
+            <h3>Portfolio first</h3>
+            <p>
+              Your portfolio is the graduation project. A creative jury evaluates it — then
+              it’s celebrated at Graduation Night.
+            </p>
+          </article>
+        </div>
+      </section>
+
+      <!-- TORUS / 3D KINETIC BREAK -->
+      <section class="orbit" aria-hidden="true">
+        <canvas id="orbit-canvas" class="orbit__canvas"></canvas>
+        <p class="orbit__label">IDEA → CONCEPT → CRAFT → IMPACT</p>
+      </section>
+
+      <!-- APPLY -->
+      <section id="apply" class="apply">
+        <p class="eyebrow">05 — Limited seats</p>
+        <h2 class="display apply__title">
+          Only <span class="text-lime">twenty-four</span><br />
+          creative talents.
+        </h2>
+        <p class="apply__text">
+          Apply. Interview. Join the cohort. Campus: Mediaschool Mechelen. English programme.
+          Class of 26–27.
+        </p>
+        <div class="apply__actions">
+          <a
+            class="btn btn--lime"
+            href="https://schoolofcreativity.be/"
+            target="_blank"
+            rel="noopener"
+            >Apply via Thomas More</a
+          >
+          <a class="btn btn--ghost-light" href="mailto:greet.wachters@thomasmore.be"
+            >Ask Greet</a
+          >
+        </div>
+        <dl class="apply__contacts">
+          <div>
+            <dt>Programme coordinator</dt>
+            <dd>Greet Wachters</dd>
+          </div>
+          <div>
+            <dt>Programme manager</dt>
+            <dd>Bert Van den Broeck</dd>
+          </div>
+          <div>
+            <dt>Admissions</dt>
+            <dd>admissions@thomasmore.be</dd>
+          </div>
+        </dl>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <p class="footer__brand">School of Creativity</p>
+      <p class="footer__meta">Thomas More · Mechelen · Postgraduate</p>
+      <a href="https://schoolofcreativity.be/" target="_blank" rel="noopener"
+        >schoolofcreativity.be</a
+      >
+    </footer>
+
+    <script type="module" src="/src/main.js"></script>
+  </body>
+</html>
