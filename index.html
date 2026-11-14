@@ -25,7 +25,7 @@
         <span>soc</span>
       </a>
       <nav class="nav__links" aria-label="Hoofdmenu">
-        <a href="#manifesto">Manifesto</a>
+        <a href="#train">Train</a>
         <a href="#programme">Programme</a>
         <a href="#roles">Roles</a>
         <a href="#apply">Apply</a>
@@ -36,19 +36,18 @@
     </header>
 
     <main id="top">
-      <!-- HERO: brand + one line + CTA on full-bleed kinetic ON sphere -->
+      <!-- 1. HERO — brand as kinetic image -->
       <section class="hero" aria-label="School of Creativity">
-        <canvas id="hero-canvas" class="hero__canvas" aria-hidden="true"></canvas>
-        <div class="hero__frame" aria-hidden="true"></div>
+        <div class="hero__glow" aria-hidden="true"></div>
         <div class="hero__content">
           <p class="hero__kicker">
             <span class="mark mark--ink" aria-hidden="true"></span>
             Thomas More · Mechelen · Class 26–27
           </p>
-          <h1 class="hero__brand">
-            <span>School</span>
-            <span>of</span>
-            <span>Creativity</span>
+          <h1 class="hero__brand" id="hero-brand" data-kinetic-brand>
+            <span class="hero__word" data-word>School</span>
+            <span class="hero__word hero__word--outline" data-word>of</span>
+            <span class="hero__word" data-word>Creativity</span>
           </h1>
           <p class="hero__lede">From student to conceptual creative thinker.</p>
           <div class="hero__actions">
@@ -62,63 +61,42 @@
             >
           </div>
         </div>
-        <p class="hero__hint" aria-hidden="true">Move to warp</p>
+        <p class="hero__hint" aria-hidden="true">Hover the type</p>
       </section>
-
-      <div class="identity" aria-hidden="true">
-        <div class="identity__swatches">
-          <span class="swatch swatch--lime">lime</span>
-          <span class="swatch swatch--orange">orange</span>
-          <span class="swatch swatch--cobalt">cobalt</span>
-          <span class="swatch swatch--ink">ink</span>
-        </div>
-        <div class="identity__type">
-          <span class="identity__word">soc</span>
-          <span>Archivo Black · Anybody · Syne</span>
-        </div>
-      </div>
 
       <div class="marquee marquee--ink" aria-hidden="true">
         <div class="marquee__track">
-          <span>CREATIVE THINKING</span><span>REAL BRIEFS</span><span>AGENCY DRILLS</span
-          ><span>PORTFOLIO</span><span>GRADUATION NIGHT</span><span>CREATIVE THINKING</span
-          ><span>REAL BRIEFS</span><span>AGENCY DRILLS</span><span>PORTFOLIO</span
-          ><span>GRADUATION NIGHT</span>
+          <span>REAL BRIEFS</span><span>AGENCY DRILLS</span><span>PORTFOLIO</span
+          ><span>GRADUATION NIGHT</span><span>CREATIVE THINKING</span><span>REAL BRIEFS</span
+          ><span>AGENCY DRILLS</span><span>PORTFOLIO</span><span>GRADUATION NIGHT</span
+          ><span>CREATIVE THINKING</span>
         </div>
       </div>
 
-      <!-- MANIFESTO + WAVE -->
-      <section id="manifesto" class="manifesto">
-        <div class="manifesto__kinetic" aria-hidden="true">
-          <canvas id="wave-canvas" class="wave-canvas"></canvas>
-          <span class="stamp">soc</span>
-        </div>
-        <div class="manifesto__copy">
-          <p class="eyebrow"><span class="mark" aria-hidden="true"></span> 01 — Manifesto</p>
-          <h2 class="display">
-            Creativity isn’t talent.<br />
-            <em>It’s a muscle.</em>
+      <!-- 2. TRAIN — manifesto as scroll-owned giant type -->
+      <section id="train" class="train" data-train>
+        <div class="train__sticky">
+          <p class="eyebrow train__eyebrow">
+            <span class="mark" aria-hidden="true"></span> 01 — Train the muscle
+          </p>
+          <h2 class="train__line" data-train-line>
+            <span>Creativity</span>
+            <span>isn’t talent.</span>
+            <span class="train__accent">It’s a muscle.</span>
           </h2>
-          <p class="manifesto__text">
+          <p class="train__copy" data-train-copy>
             Wij trainen conceptual creative thinkers. Strategische inzichten → concepten die
             opvallen. Focus. Feedback. Deliberate practice. Echte briefs voor echte merken.
           </p>
         </div>
       </section>
 
-      <!-- GLITCH -->
-      <section class="statement" aria-label="Kernboodschap">
-        <canvas id="glitch-canvas" class="statement__canvas" aria-hidden="true"></canvas>
-        <div class="statement__copy">
-          <p class="statement__sub">No exams. No theory for theory’s sake.</p>
-          <p class="statement__tag">Learning by doing is our motto.</p>
-        </div>
-      </section>
-
-      <!-- PROGRAMME (keep structure — this was the strong part) -->
+      <!-- 3. PROGRAMME — accordion (kept; was strong) -->
       <section id="programme" class="programme">
         <header class="section-head">
-          <p class="eyebrow"><span class="mark mark--orange" aria-hidden="true"></span> 02 — Programme</p>
+          <p class="eyebrow">
+            <span class="mark mark--orange" aria-hidden="true"></span> 02 — Programme
+          </p>
           <h2 class="display">Dive into the<br /><span class="text-orange">creative pool.</span></h2>
           <p class="section-lede">
             26 weken inspiratie, workshops en coaching. Plus 10 weken internship bij Belgische
@@ -187,19 +165,42 @@
         </ol>
       </section>
 
-      <div class="marquee marquee--orange marquee--reverse" aria-hidden="true">
-        <div class="marquee__track">
-          <span>COPYWRITER</span><span>ART DIRECTOR</span><span>CONCEPTUAL CREATIVE</span
-          ><span>CONTENT CREATOR</span><span>CREATIVE THINKER</span><span>COPYWRITER</span
-          ><span>ART DIRECTOR</span><span>CONCEPTUAL CREATIVE</span><span>CONTENT CREATOR</span
-          ><span>CREATIVE THINKER</span>
+      <!-- 4. YEAR PATH — one big scroll-owned kinetic story of the year -->
+      <section id="year" class="year" data-year aria-label="Het jaar in beweging">
+        <div class="year__sticky">
+          <p class="eyebrow year__eyebrow">
+            <span class="mark mark--lime" aria-hidden="true"></span> The year, in motion
+          </p>
+          <p class="year__stage" data-year-stage>01 · Theory</p>
+          <h2 class="year__title" data-year-title>You don’t learn creativity.<br />You become it.</h2>
+          <p class="year__body" data-year-body>
+            Zes weken fundament: technieken, immersie in sterk werk, echte client briefings.
+          </p>
+          <div class="year__progress" aria-hidden="true">
+            <span data-year-dot class="is-on"></span>
+            <span data-year-dot></span>
+            <span data-year-dot></span>
+            <span data-year-dot></span>
+            <span data-year-dot></span>
+          </div>
         </div>
-      </div>
+      </section>
 
+      <!-- 5. ROLES — industry ticket as giant kinetic type -->
       <section id="roles" class="roles">
-        <div class="roles__left">
-          <p class="eyebrow"><span class="mark mark--lime" aria-hidden="true"></span> 03 — After graduation</p>
+        <div class="roles__head">
+          <p class="eyebrow">
+            <span class="mark mark--lime" aria-hidden="true"></span> 03 — After graduation
+          </p>
           <h2 class="display">Your ticket<br />into the<br /><em>industry.</em></h2>
+        </div>
+        <div class="roles__kinetic" data-roles-kinetic aria-hidden="true">
+          <div class="roles__rail" data-roles-rail>
+            <span>Copywriter</span><span>Art director</span><span>Conceptual creative</span
+            ><span>Content creator</span><span>Creative thinker</span><span>Copywriter</span
+            ><span>Art director</span><span>Conceptual creative</span><span>Content creator</span
+            ><span>Creative thinker</span>
+          </div>
         </div>
         <ul class="roles__list">
           <li>Copywriter</li>
@@ -232,7 +233,9 @@
       </section>
 
       <section class="why">
-        <p class="eyebrow"><span class="mark mark--ink" aria-hidden="true"></span> 04 — Why SOC</p>
+        <p class="eyebrow">
+          <span class="mark mark--ink" aria-hidden="true"></span> 04 — Why SOC
+        </p>
         <div class="why__grid">
           <article class="why__item why__item--a">
             <h3>Industry needs you</h3>
@@ -258,13 +261,12 @@
         </div>
       </section>
 
-      <section class="orbit" aria-label="Kinetic identity break">
-        <canvas id="orbit-canvas" class="orbit__canvas"></canvas>
-        <p class="orbit__label">IDEA → CONCEPT → CRAFT → IMPACT</p>
-      </section>
-
+      <!-- 6. APPLY — big number as kinetic climax -->
       <section id="apply" class="apply">
-        <p class="eyebrow"><span class="mark mark--orange" aria-hidden="true"></span> 05 — Limited seats</p>
+        <p class="eyebrow">
+          <span class="mark mark--orange" aria-hidden="true"></span> 05 — Limited seats
+        </p>
+        <div class="apply__count" data-apply-count aria-hidden="true">24</div>
         <h2 class="display apply__title">
           Only <span class="text-lime">twenty-four</span><br />
           creative talents.
