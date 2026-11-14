@@ -11,7 +11,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
-      href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Anybody:wdth,wght@50..150,200..900&family=Syne:wght@400;500;600;700;800&display=swap"
+      href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Anybody:wdth,wght@75..150,400..900&family=Syne:wght@500;600;700;800&display=swap"
       rel="stylesheet"
     />
     <link rel="stylesheet" href="/src/style.css" />
@@ -20,7 +20,10 @@
     <div class="noise" aria-hidden="true"></div>
 
     <header class="nav">
-      <a class="nav__brand" href="#top">SOC</a>
+      <a class="nav__brand" href="#top" aria-label="School of Creativity home">
+        <span class="mark" aria-hidden="true"></span>
+        <span>soc</span>
+      </a>
       <nav class="nav__links" aria-label="Hoofdmenu">
         <a href="#manifesto">Manifesto</a>
         <a href="#programme">Programme</a>
@@ -33,20 +36,21 @@
     </header>
 
     <main id="top">
-      <!-- HERO: one composition — brand, headline, sentence, CTA, dominant kinetic field -->
+      <!-- HERO: brand + one line + CTA on full-bleed kinetic ON sphere -->
       <section class="hero" aria-label="School of Creativity">
         <canvas id="hero-canvas" class="hero__canvas" aria-hidden="true"></canvas>
-        <div class="hero__veil" aria-hidden="true"></div>
+        <div class="hero__frame" aria-hidden="true"></div>
         <div class="hero__content">
-          <p class="hero__brand">School of Creativity</p>
-          <h1 class="hero__title">
-            <span class="hero__line">Think</span>
-            <span class="hero__line hero__line--accent">louder.</span>
-          </h1>
-          <p class="hero__lede">
-            Van student tot conceptual creative thinker — één jaar, echte briefs, echte
-            agencies.
+          <p class="hero__kicker">
+            <span class="mark mark--ink" aria-hidden="true"></span>
+            Thomas More · Mechelen · Class 26–27
           </p>
+          <h1 class="hero__brand">
+            <span>School</span>
+            <span>of</span>
+            <span>Creativity</span>
+          </h1>
+          <p class="hero__lede">From student to conceptual creative thinker.</p>
           <div class="hero__actions">
             <a class="btn btn--ink" href="#programme">Bekijk het programma</a>
             <a
@@ -58,9 +62,23 @@
             >
           </div>
         </div>
+        <p class="hero__hint" aria-hidden="true">Move to warp</p>
       </section>
 
-      <div class="marquee marquee--lime" aria-hidden="true">
+      <div class="identity" aria-hidden="true">
+        <div class="identity__swatches">
+          <span class="swatch swatch--lime">lime</span>
+          <span class="swatch swatch--orange">orange</span>
+          <span class="swatch swatch--cobalt">cobalt</span>
+          <span class="swatch swatch--ink">ink</span>
+        </div>
+        <div class="identity__type">
+          <span class="identity__word">soc</span>
+          <span>Archivo Black · Anybody · Syne</span>
+        </div>
+      </div>
+
+      <div class="marquee marquee--ink" aria-hidden="true">
         <div class="marquee__track">
           <span>CREATIVE THINKING</span><span>REAL BRIEFS</span><span>AGENCY DRILLS</span
           ><span>PORTFOLIO</span><span>GRADUATION NIGHT</span><span>CREATIVE THINKING</span
@@ -69,36 +87,38 @@
         </div>
       </div>
 
-      <!-- MANIFESTO -->
+      <!-- MANIFESTO + WAVE -->
       <section id="manifesto" class="manifesto">
         <div class="manifesto__kinetic" aria-hidden="true">
-          <div class="wave-grid" id="wave-grid"></div>
+          <canvas id="wave-canvas" class="wave-canvas"></canvas>
+          <span class="stamp">soc</span>
         </div>
         <div class="manifesto__copy">
-          <p class="eyebrow">01 — Manifesto</p>
+          <p class="eyebrow"><span class="mark" aria-hidden="true"></span> 01 — Manifesto</p>
           <h2 class="display">
             Creativity isn’t talent.<br />
             <em>It’s a muscle.</em>
           </h2>
           <p class="manifesto__text">
-            Wij geloven dat creativiteit vooruitgang drijft — voor merken, business en
-            samenleving. Je leert strategische inzichten omzetten in concepten die opvallen
-            en impact maken. Focus. Feedback. Deliberate practice.
+            Wij trainen conceptual creative thinkers. Strategische inzichten → concepten die
+            opvallen. Focus. Feedback. Deliberate practice. Echte briefs voor echte merken.
           </p>
         </div>
       </section>
 
-      <!-- GLITCH STATEMENT -->
+      <!-- GLITCH -->
       <section class="statement" aria-label="Kernboodschap">
         <canvas id="glitch-canvas" class="statement__canvas" aria-hidden="true"></canvas>
-        <p class="statement__sub">No exams. No theory for theory’s sake.</p>
-        <p class="statement__tag">Learning by doing is our motto.</p>
+        <div class="statement__copy">
+          <p class="statement__sub">No exams. No theory for theory’s sake.</p>
+          <p class="statement__tag">Learning by doing is our motto.</p>
+        </div>
       </section>
 
-      <!-- PROGRAMME MODULES -->
+      <!-- PROGRAMME (keep structure — this was the strong part) -->
       <section id="programme" class="programme">
         <header class="section-head">
-          <p class="eyebrow">02 — Programme</p>
+          <p class="eyebrow"><span class="mark mark--orange" aria-hidden="true"></span> 02 — Programme</p>
           <h2 class="display">Dive into the<br /><span class="text-orange">creative pool.</span></h2>
           <p class="section-lede">
             26 weken inspiratie, workshops en coaching. Plus 10 weken internship bij Belgische
@@ -176,10 +196,9 @@
         </div>
       </div>
 
-      <!-- ROLES / AFTER -->
       <section id="roles" class="roles">
         <div class="roles__left">
-          <p class="eyebrow">03 — After graduation</p>
+          <p class="eyebrow"><span class="mark mark--lime" aria-hidden="true"></span> 03 — After graduation</p>
           <h2 class="display">Your ticket<br />into the<br /><em>industry.</em></h2>
         </div>
         <ul class="roles__list">
@@ -193,7 +212,6 @@
         </ul>
       </section>
 
-      <!-- FACTS STRIP -->
       <section class="facts" aria-label="Praktisch">
         <article class="fact">
           <span class="fact__value" data-count="1">0</span>
@@ -213,9 +231,8 @@
         </article>
       </section>
 
-      <!-- WHY -->
       <section class="why">
-        <p class="eyebrow">04 — Why SOC</p>
+        <p class="eyebrow"><span class="mark mark--ink" aria-hidden="true"></span> 04 — Why SOC</p>
         <div class="why__grid">
           <article class="why__item why__item--a">
             <h3>Industry needs you</h3>
@@ -241,15 +258,13 @@
         </div>
       </section>
 
-      <!-- TORUS / 3D KINETIC BREAK -->
-      <section class="orbit" aria-hidden="true">
+      <section class="orbit" aria-label="Kinetic identity break">
         <canvas id="orbit-canvas" class="orbit__canvas"></canvas>
         <p class="orbit__label">IDEA → CONCEPT → CRAFT → IMPACT</p>
       </section>
 
-      <!-- APPLY -->
       <section id="apply" class="apply">
-        <p class="eyebrow">05 — Limited seats</p>
+        <p class="eyebrow"><span class="mark mark--orange" aria-hidden="true"></span> 05 — Limited seats</p>
         <h2 class="display apply__title">
           Only <span class="text-lime">twenty-four</span><br />
           creative talents.
@@ -288,7 +303,10 @@
     </main>
 
     <footer class="footer">
-      <p class="footer__brand">School of Creativity</p>
+      <a class="footer__brand" href="#top">
+        <span class="mark mark--ink" aria-hidden="true"></span>
+        School of Creativity
+      </a>
       <p class="footer__meta">Thomas More · Mechelen · Postgraduate</p>
       <a href="https://schoolofcreativity.be/" target="_blank" rel="noopener"
         >schoolofcreativity.be</a
