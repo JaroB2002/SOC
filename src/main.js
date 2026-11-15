@@ -1,18 +1,26 @@
 /**
- * School of Creativity — purposeful kinetic motion
- * Principles: type as image · scroll ownership · motion serves story
+ * School of Creativity — craft pass
+ * Type as image · scroll ownership · real atmosphere
  */
 
 const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
 
-/* ——— Hero: brand letters react to cursor (type as image) ——— */
-function initHeroBrand() {
-  const brand = document.querySelector('[data-kinetic-brand]')
+function lerp(a, b, t) {
+  return a + (b - a) * t
+}
+
+function clamp01(n) {
+  return Math.min(1, Math.max(0, n))
+}
+
+/* ——— Hero: parallax media + brand letter kinetic ——— */
+function initHero() {
   const hero = document.querySelector('.hero')
-  if (!brand || !hero) return
+  const brand = document.querySelector('[data-kinetic-brand]')
+  const img = document.querySelector('[data-hero-img]')
+  if (!hero || !brand) return
 
   const words = [...brand.querySelectorAll('[data-word]')]
-  // Split each word into letter spans for proximity reaction
   words.forEach((word) => {
     const text = word.textContent
     word.textContent = ''
@@ -20,21 +28,45 @@ function initHeroBrand() {
       const span = document.createElement('span')
       span.className = 'hero__letter'
       span.textContent = ch
-      span.style.display = 'inline-block'
-      span.style.willChange = 'transform'
       word.appendChild(span)
     })
   })
 
   const letters = [...brand.querySelectorAll('.hero__letter')]
-
   if (reducedMotion) return
 
-  let mx = 0.5
+  let mx = 0.42
   let my = 0.5
-  let raf = 0
+  let tx = 0.42
+  let ty = 0.5
+  let scrollP = 0
+
+  const onScroll = () => {
+    const rect = hero.getBoundingClientRect()
+    scrollP = clamp01(-rect.top / Math.max(rect.height, 1))
+  }
+
+  hero.addEventListener('pointermove', (e) => {
+    const rect = hero.getBoundingClientRect()
+    tx = (e.clientX - rect.left) / rect.width
+    ty = (e.clientY - rect.top) / rect.height
+  })
+  hero.addEventListener('pointerleave', () => {
+    tx = 0.42
+    ty = 0.5
+  })
 
   const tick = () => {
+    mx = lerp(mx, tx, 0.08)
+    my = lerp(my, ty, 0.08)
+
+    if (img) {
+      const px = (mx - 0.5) * 18
+      const py = (my - 0.5) * 12 + scrollP * 40
+      const scale = 1.08 + scrollP * 0.04
+      img.style.transform = `translate(${px}px, ${py}px) scale(${scale})`
+    }
+
     letters.forEach((letter) => {
       const r = letter.getBoundingClientRect()
       const lx = (r.left + r.width / 2) / window.innerWidth
@@ -42,30 +74,22 @@ function initHeroBrand() {
       const dx = lx - mx
       const dy = ly - my
       const dist = Math.sqrt(dx * dx + dy * dy)
-      const force = Math.max(0, 1 - dist * 2.2)
-      const skew = (mx - lx) * force * 18
-      const lift = -force * 18
-      const scale = 1 + force * 0.18
-      letter.style.transform = `translateY(${lift}px) skewX(${skew}deg) scale(${scale})`
+      const force = Math.max(0, 1 - dist * 2.4)
+      const skew = (mx - lx) * force * 22
+      const lift = -force * 22
+      const scale = 1 + force * 0.22
+      letter.style.transform = `translate3d(0, ${lift}px, 0) skewX(${skew}deg) scale(${scale})`
     })
-    raf = requestAnimationFrame(tick)
+
+    requestAnimationFrame(tick)
   }
 
-  hero.addEventListener('pointermove', (e) => {
-    mx = e.clientX / window.innerWidth
-    my = e.clientY / window.innerHeight
-  })
-
-  hero.addEventListener('pointerleave', () => {
-    mx = 0.5
-    my = 0.45
-  })
-
+  onScroll()
+  window.addEventListener('scroll', onScroll, { passive: true })
   tick()
-  return () => cancelAnimationFrame(raf)
 }
 
-/* ——— Train: scroll owns the manifesto type ——— */
+/* ——— Train scroll ownership ——— */
 function initTrain() {
   const section = document.querySelector('[data-train]')
   const line = document.querySelector('[data-train-line]')
@@ -84,23 +108,21 @@ function initTrain() {
   const onScroll = () => {
     const rect = section.getBoundingClientRect()
     const total = section.offsetHeight - window.innerHeight
-    const scrolled = Math.min(Math.max(-rect.top, 0), total)
-    const p = total > 0 ? scrolled / total : 0
+    const p = clamp01((-rect.top) / Math.max(total, 1))
 
     spans.forEach((span, i) => {
-      const local = Math.min(1, Math.max(0, (p - i * 0.12) / 0.35))
-      const y = (1 - local) * 40
-      const op = 0.15 + local * 0.85
-      const track = (1 - local) * 0.08
-      span.style.opacity = String(op)
-      span.style.transform = `translateY(${y}px)`
-      span.style.letterSpacing = `${-0.04 + track}em`
+      const local = clamp01((p - i * 0.14) / 0.32)
+      const eased = 1 - (1 - local) ** 2
+      span.style.opacity = String(0.12 + eased * 0.88)
+      span.style.transform = `translate3d(0, ${(1 - eased) * 48}px, 0)`
+      span.style.letterSpacing = `${-0.04 + (1 - eased) * 0.1}em`
     })
 
     if (copy) {
-      const cp = Math.min(1, Math.max(0, (p - 0.45) / 0.35))
-      copy.style.opacity = String(cp)
-      copy.style.transform = `translateY(${(1 - cp) * 20}px)`
+      const cp = clamp01((p - 0.48) / 0.32)
+      const eased = 1 - (1 - cp) ** 2
+      copy.style.opacity = String(eased)
+      copy.style.transform = `translate3d(0, ${(1 - eased) * 24}px, 0)`
     }
   }
 
@@ -109,7 +131,7 @@ function initTrain() {
   window.addEventListener('resize', onScroll)
 }
 
-/* ——— Year path: scroll-owned year story ——— */
+/* ——— Year path with morph ——— */
 const YEAR_BEATS = [
   {
     stage: '01 · Theory',
@@ -140,53 +162,92 @@ const YEAR_BEATS = [
 
 function initYear() {
   const section = document.querySelector('[data-year]')
+  const morph = document.querySelector('[data-year-morph]')
   const stageEl = document.querySelector('[data-year-stage]')
   const titleEl = document.querySelector('[data-year-title]')
   const bodyEl = document.querySelector('[data-year-body]')
   const dots = [...document.querySelectorAll('[data-year-dot]')]
+  const photos = [...document.querySelectorAll('[data-year-photo]')]
   if (!section || !stageEl || !titleEl || !bodyEl) return
 
   let current = 0
+  let pending = null
+  let animating = false
 
-  const applyBeat = (index, animate) => {
+  const paint = (index) => {
     const beat = YEAR_BEATS[index]
-    if (!beat) return
-    current = index
     stageEl.textContent = beat.stage
     titleEl.innerHTML = beat.title
     bodyEl.textContent = beat.body
     dots.forEach((d, i) => d.classList.toggle('is-on', i === index))
-
-    if (animate && !reducedMotion) {
-      titleEl.style.opacity = '0'
-      titleEl.style.transform = 'translateY(18px)'
-      bodyEl.style.opacity = '0'
-      requestAnimationFrame(() => {
-        titleEl.style.opacity = '1'
-        titleEl.style.transform = 'none'
-        bodyEl.style.opacity = '1'
-      })
-    }
+    photos.forEach((p, i) => p.classList.toggle('is-on', i === index))
   }
 
-  applyBeat(0, false)
+  const showResting = () => {
+    if (!morph) return
+    morph.classList.remove('is-leaving', 'is-entering')
+    ;[stageEl, titleEl, bodyEl].forEach((el) => {
+      el.style.opacity = '1'
+      el.style.transform = 'none'
+    })
+  }
+
+  const goTo = (index) => {
+    if (index === current) return
+    if (animating) {
+      pending = index
+      return
+    }
+    if (reducedMotion || !morph) {
+      current = index
+      paint(index)
+      showResting()
+      return
+    }
+
+    animating = true
+    morph.classList.remove('is-entering')
+    morph.classList.add('is-leaving')
+    photos.forEach((p, i) => p.classList.toggle('is-on', i === index))
+
+    window.setTimeout(() => {
+      current = index
+      paint(index)
+      morph.classList.remove('is-leaving')
+      morph.classList.add('is-entering')
+      void morph.offsetWidth
+      requestAnimationFrame(() => {
+        morph.classList.remove('is-entering')
+        showResting()
+        animating = false
+        if (pending !== null && pending !== current) {
+          const next = pending
+          pending = null
+          goTo(next)
+        } else {
+          pending = null
+        }
+      })
+    }, 320)
+  }
+
+  paint(0)
+  showResting()
 
   if (reducedMotion) return
 
   const onScroll = () => {
     const rect = section.getBoundingClientRect()
     const total = section.offsetHeight - window.innerHeight
-    const scrolled = Math.min(Math.max(-rect.top, 0), total)
-    const p = total > 0 ? scrolled / total : 0
-    const index = Math.min(YEAR_BEATS.length - 1, Math.floor(p * YEAR_BEATS.length))
-    if (index !== current) applyBeat(index, true)
+    const p = clamp01((-rect.top) / Math.max(total, 1))
+    const index = Math.min(YEAR_BEATS.length - 1, Math.floor(p * (YEAR_BEATS.length - 0.001)))
+    goTo(index)
   }
 
   window.addEventListener('scroll', onScroll, { passive: true })
   window.addEventListener('resize', onScroll)
 }
 
-/* ——— Roles: giant type rail tied to scroll ——— */
 function initRolesRail() {
   const rail = document.querySelector('[data-roles-rail]')
   const section = document.querySelector('#roles')
@@ -195,15 +256,14 @@ function initRolesRail() {
   const onScroll = () => {
     const rect = section.getBoundingClientRect()
     const view = window.innerHeight
-    const p = 1 - Math.min(1, Math.max(0, rect.bottom / (view + rect.height)))
-    rail.style.transform = `translateX(${-p * 35}%)`
+    const p = 1 - clamp01(rect.bottom / (view + rect.height))
+    rail.style.transform = `translate3d(${-p * 35}%, 0, 0)`
   }
 
   onScroll()
   window.addEventListener('scroll', onScroll, { passive: true })
 }
 
-/* ——— Apply: giant 24 reacts to scroll ——— */
 function initApplyCount() {
   const el = document.querySelector('[data-apply-count]')
   const section = document.querySelector('#apply')
@@ -212,10 +272,8 @@ function initApplyCount() {
   const onScroll = () => {
     const rect = section.getBoundingClientRect()
     const view = window.innerHeight
-    const p = Math.min(1, Math.max(0, 1 - rect.top / view))
-    const scale = 0.85 + p * 0.25
-    const x = (1 - p) * 4
-    el.style.transform = `translateX(${x}%) scale(${scale})`
+    const p = clamp01(1 - rect.top / view)
+    el.style.transform = `translate3d(${(1 - p) * 4}%, 0, 0) scale(${0.85 + p * 0.28})`
   }
 
   onScroll()
@@ -246,7 +304,7 @@ function initCounters() {
     }
     const start = performance.now()
     const step = (now) => {
-      const p = Math.min(1, (now - start) / 1200)
+      const p = clamp01((now - start) / 1200)
       el.textContent = Math.round(target * (1 - (1 - p) ** 3)).toLocaleString('nl-BE')
       if (p < 1) requestAnimationFrame(step)
     }
@@ -288,7 +346,7 @@ function initReveals() {
   })
 }
 
-initHeroBrand()
+initHero()
 initTrain()
 initYear()
 initRolesRail()

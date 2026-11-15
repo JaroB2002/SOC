@@ -36,24 +36,34 @@
     </header>
 
     <main id="top">
-      <!-- 1. HERO — brand as kinetic image -->
+      <!-- HERO: full-bleed place/atmosphere + brand-first kinetic type -->
       <section class="hero" aria-label="School of Creativity">
-        <div class="hero__glow" aria-hidden="true"></div>
+        <div class="hero__media" aria-hidden="true">
+          <img
+            class="hero__img"
+            data-hero-img
+            src="/hero-soc.jpg"
+            alt=""
+            width="2048"
+            height="1536"
+          />
+          <div class="hero__wash"></div>
+        </div>
         <div class="hero__content">
           <p class="hero__kicker">
-            <span class="mark mark--ink" aria-hidden="true"></span>
+            <span class="mark mark--lime" aria-hidden="true"></span>
             Thomas More · Mechelen · Class 26–27
           </p>
-          <h1 class="hero__brand" id="hero-brand" data-kinetic-brand>
+          <h1 class="hero__brand" data-kinetic-brand>
             <span class="hero__word" data-word>School</span>
-            <span class="hero__word hero__word--outline" data-word>of</span>
+            <span class="hero__word hero__word--accent" data-word>of</span>
             <span class="hero__word" data-word>Creativity</span>
           </h1>
           <p class="hero__lede">From student to conceptual creative thinker.</p>
           <div class="hero__actions">
-            <a class="btn btn--ink" href="#programme">Bekijk het programma</a>
+            <a class="btn btn--lime" href="#programme">Bekijk het programma</a>
             <a
-              class="btn btn--ghost"
+              class="btn btn--ghost-on-dark"
               href="https://schoolofcreativity.be/"
               target="_blank"
               rel="noopener"
@@ -61,7 +71,6 @@
             >
           </div>
         </div>
-        <p class="hero__hint" aria-hidden="true">Hover the type</p>
       </section>
 
       <div class="marquee marquee--ink" aria-hidden="true">
@@ -73,7 +82,7 @@
         </div>
       </div>
 
-      <!-- 2. TRAIN — manifesto as scroll-owned giant type -->
+      <!-- TRAIN -->
       <section id="train" class="train" data-train>
         <div class="train__sticky">
           <p class="eyebrow train__eyebrow">
@@ -91,7 +100,7 @@
         </div>
       </section>
 
-      <!-- 3. PROGRAMME — accordion (kept; was strong) -->
+      <!-- PROGRAMME -->
       <section id="programme" class="programme">
         <header class="section-head">
           <p class="eyebrow">
@@ -165,28 +174,53 @@
         </ol>
       </section>
 
-      <!-- 4. YEAR PATH — one big scroll-owned kinetic story of the year -->
+      <!-- YEAR PATH with morphing copy + photo stage -->
       <section id="year" class="year" data-year aria-label="Het jaar in beweging">
         <div class="year__sticky">
-          <p class="eyebrow year__eyebrow">
-            <span class="mark mark--lime" aria-hidden="true"></span> The year, in motion
-          </p>
-          <p class="year__stage" data-year-stage>01 · Theory</p>
-          <h2 class="year__title" data-year-title>You don’t learn creativity.<br />You become it.</h2>
-          <p class="year__body" data-year-body>
-            Zes weken fundament: technieken, immersie in sterk werk, echte client briefings.
-          </p>
-          <div class="year__progress" aria-hidden="true">
-            <span data-year-dot class="is-on"></span>
-            <span data-year-dot></span>
-            <span data-year-dot></span>
-            <span data-year-dot></span>
-            <span data-year-dot></span>
+          <div class="year__stage-media" aria-hidden="true">
+            <img class="year__photo is-on" data-year-photo src="/practice.jpg" alt="" />
+            <img class="year__photo" data-year-photo src="/practice.jpg" alt="" />
+            <img class="year__photo" data-year-photo src="/coaches.jpg" alt="" />
+            <img class="year__photo" data-year-photo src="/coaches.jpg" alt="" />
+            <img class="year__photo" data-year-photo src="/hero-soc.jpg" alt="" />
+            <div class="year__photo-wash"></div>
+          </div>
+          <div class="year__copy">
+            <p class="eyebrow year__eyebrow">
+              <span class="mark mark--lime" aria-hidden="true"></span> The year, in motion
+            </p>
+            <div class="year__morph" data-year-morph>
+              <p class="year__stage" data-year-stage>01 · Theory</p>
+              <h2 class="year__title" data-year-title>
+                You don’t learn creativity.<br />You become it.
+              </h2>
+              <p class="year__body" data-year-body>
+                Zes weken fundament: technieken, immersie in sterk werk, echte client briefings.
+              </p>
+            </div>
+            <div class="year__progress" aria-hidden="true">
+              <span data-year-dot class="is-on"></span>
+              <span data-year-dot></span>
+              <span data-year-dot></span>
+              <span data-year-dot></span>
+              <span data-year-dot></span>
+            </div>
           </div>
         </div>
       </section>
 
-      <!-- 5. ROLES — industry ticket as giant kinetic type -->
+      <!-- STUDIO ANCHOR — one real place/atmosphere beat -->
+      <section class="studio" aria-label="In de studio">
+        <figure class="studio__frame">
+          <img src="/practice.jpg" alt="Studenten aan het werk in de School of Creativity studio" />
+          <figcaption class="studio__caption">
+            <span class="eyebrow"><span class="mark mark--lime" aria-hidden="true"></span> Learning by doing</span>
+            <p>No exams. Your portfolio is the graduation project.</p>
+          </figcaption>
+        </figure>
+      </section>
+
+      <!-- ROLES -->
       <section id="roles" class="roles">
         <div class="roles__head">
           <p class="eyebrow">
@@ -194,7 +228,7 @@
           </p>
           <h2 class="display">Your ticket<br />into the<br /><em>industry.</em></h2>
         </div>
-        <div class="roles__kinetic" data-roles-kinetic aria-hidden="true">
+        <div class="roles__kinetic" aria-hidden="true">
           <div class="roles__rail" data-roles-rail>
             <span>Copywriter</span><span>Art director</span><span>Conceptual creative</span
             ><span>Content creator</span><span>Creative thinker</span><span>Copywriter</span
@@ -261,7 +295,7 @@
         </div>
       </section>
 
-      <!-- 6. APPLY — big number as kinetic climax -->
+      <!-- APPLY -->
       <section id="apply" class="apply">
         <p class="eyebrow">
           <span class="mark mark--orange" aria-hidden="true"></span> 05 — Limited seats
