@@ -1,19 +1,16 @@
-/**
- * School of Creativity — craft pass
- * Type as image · scroll ownership · real atmosphere
- */
-
 const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
 
-function lerp(a, b, t) {
-  return a + (b - a) * t
+const clamp01 = (n) => Math.min(1, Math.max(0, n))
+const lerp = (a, b, t) => a + (b - a) * t
+const easeOut = (t) => 1 - (1 - t) ** 2
+
+function sectionProgress(section) {
+  const rect = section.getBoundingClientRect()
+  const total = Math.max(section.offsetHeight - window.innerHeight, 1)
+  return clamp01(-rect.top / total)
 }
 
-function clamp01(n) {
-  return Math.min(1, Math.max(0, n))
-}
-
-/* ——— Hero: parallax media + brand letter kinetic ——— */
+/* Hero: staggered slam + cursor kinetic + parallax */
 function initHero() {
   const hero = document.querySelector('.hero')
   const brand = document.querySelector('[data-kinetic-brand]')
@@ -33,12 +30,22 @@ function initHero() {
   })
 
   const letters = [...brand.querySelectorAll('.hero__letter')]
-  if (reducedMotion) return
 
-  let mx = 0.42
+  if (reducedMotion) {
+    letters.forEach((l) => l.classList.add('is-in'))
+    return
+  }
+
+  letters.forEach((letter, i) => {
+    letter.style.transitionDelay = `${120 + i * 28}ms`
+    requestAnimationFrame(() => letter.classList.add('is-in'))
+  })
+
+  let mx = 0.5
   let my = 0.5
-  let tx = 0.42
+  let tx = 0.5
   let ty = 0.5
+  let hovering = false
   let scrollP = 0
 
   const onScroll = () => {
@@ -46,39 +53,44 @@ function initHero() {
     scrollP = clamp01(-rect.top / Math.max(rect.height, 1))
   }
 
+  hero.addEventListener('pointerenter', () => {
+    hovering = true
+  })
   hero.addEventListener('pointermove', (e) => {
-    const rect = hero.getBoundingClientRect()
-    tx = (e.clientX - rect.left) / rect.width
-    ty = (e.clientY - rect.top) / rect.height
+    hovering = true
+    const r = hero.getBoundingClientRect()
+    tx = (e.clientX - r.left) / r.width
+    ty = (e.clientY - r.top) / r.height
   })
   hero.addEventListener('pointerleave', () => {
-    tx = 0.42
+    hovering = false
+    tx = 0.5
     ty = 0.5
   })
 
   const tick = () => {
-    mx = lerp(mx, tx, 0.08)
-    my = lerp(my, ty, 0.08)
+    mx = lerp(mx, tx, 0.12)
+    my = lerp(my, ty, 0.12)
 
     if (img) {
-      const px = (mx - 0.5) * 18
-      const py = (my - 0.5) * 12 + scrollP * 40
-      const scale = 1.08 + scrollP * 0.04
-      img.style.transform = `translate(${px}px, ${py}px) scale(${scale})`
+      const driftX = hovering ? (mx - 0.5) * 24 : 0
+      const driftY = hovering ? (my - 0.5) * 16 : 0
+      img.style.transform = `translate(${driftX}px, ${driftY + scrollP * 48}px) scale(${1.1 + scrollP * 0.05})`
+      img.style.filter = `brightness(${1 - scrollP * 0.22})`
     }
 
     letters.forEach((letter) => {
+      if (!letter.classList.contains('is-in')) return
+      if (!hovering) {
+        letter.style.transform = ''
+        return
+      }
       const r = letter.getBoundingClientRect()
       const lx = (r.left + r.width / 2) / window.innerWidth
       const ly = (r.top + r.height / 2) / window.innerHeight
-      const dx = lx - mx
-      const dy = ly - my
-      const dist = Math.sqrt(dx * dx + dy * dy)
-      const force = Math.max(0, 1 - dist * 2.4)
-      const skew = (mx - lx) * force * 22
-      const lift = -force * 22
-      const scale = 1 + force * 0.22
-      letter.style.transform = `translate3d(0, ${lift}px, 0) skewX(${skew}deg) scale(${scale})`
+      const dist = Math.hypot(lx - mx, ly - my)
+      const force = Math.max(0, 1 - dist * 2.5)
+      letter.style.transform = `translate3d(0, ${-force * 20}px, 0) skewX(${(mx - lx) * force * 18}deg) scale(${1 + force * 0.18})`
     })
 
     requestAnimationFrame(tick)
@@ -89,191 +101,110 @@ function initHero() {
   tick()
 }
 
-/* ——— Train scroll ownership ——— */
+/* Train: pre fades out, MUSCLE scales up to dominate */
 function initTrain() {
   const section = document.querySelector('[data-train]')
-  const line = document.querySelector('[data-train-line]')
+  const pre = document.querySelector('[data-train-pre]')
+  const muscle = document.querySelector('[data-train-muscle]')
   const copy = document.querySelector('[data-train-copy]')
-  if (!section || !line) return
+  if (!section || !muscle) return
 
-  const spans = [...line.children]
-  if (reducedMotion) {
-    if (copy) {
-      copy.style.opacity = '1'
-      copy.style.transform = 'none'
+  if (reducedMotion) return
+
+  const onScroll = () => {
+    const p = sectionProgress(section)
+
+    if (pre) {
+      const preP = easeOut(clamp01(1 - p / 0.28))
+      pre.style.opacity = String(preP)
+      pre.style.transform = `translate3d(0, ${-(1 - preP) * 40}px, 0)`
     }
+
+    // Muscle grows through mid scroll
+    const grow = easeOut(clamp01((p - 0.08) / 0.55))
+    const scale = 0.55 + grow * 1.15
+    const x = (1 - grow) * -4
+    muscle.style.transform = `translate3d(${x}%, 0, 0) scale(${scale})`
+    muscle.style.opacity = String(0.35 + grow * 0.65)
+
+    if (copy) {
+      const cp = easeOut(clamp01((p - 0.62) / 0.28))
+      copy.style.opacity = String(cp)
+      copy.style.transform = `translate3d(0, ${(1 - cp) * 28}px, 0)`
+    }
+  }
+
+  onScroll()
+  window.addEventListener('scroll', onScroll, { passive: true })
+  window.addEventListener('resize', onScroll)
+}
+
+/* Year: vertical scroll owns horizontal track */
+function initYear() {
+  const section = document.querySelector('[data-year]')
+  const track = document.querySelector('[data-year-track]')
+  const fill = document.querySelector('[data-year-fill]')
+  if (!section || !track) return
+
+  if (reducedMotion) return
+
+  const onScroll = () => {
+    const p = sectionProgress(section)
+    const maxX = Math.max(track.scrollWidth - window.innerWidth + 48, 0)
+    track.style.transform = `translate3d(${-maxX * p}px, 0, 0)`
+    if (fill) fill.style.width = `${p * 100}%`
+  }
+
+  onScroll()
+  window.addEventListener('scroll', onScroll, { passive: true })
+  window.addEventListener('resize', onScroll)
+}
+
+/* Roles: hotspot follows scroll through list */
+function initRoles() {
+  const list = document.querySelector('[data-roles-list]')
+  const section = document.querySelector('#roles')
+  if (!list || !section) return
+  const items = [...list.children]
+  if (reducedMotion) {
+    items.forEach((li) => li.classList.add('is-hot'))
     return
   }
 
   const onScroll = () => {
     const rect = section.getBoundingClientRect()
-    const total = section.offsetHeight - window.innerHeight
-    const p = clamp01((-rect.top) / Math.max(total, 1))
-
-    spans.forEach((span, i) => {
-      const local = clamp01((p - i * 0.14) / 0.32)
-      const eased = 1 - (1 - local) ** 2
-      span.style.opacity = String(0.12 + eased * 0.88)
-      span.style.transform = `translate3d(0, ${(1 - eased) * 48}px, 0)`
-      span.style.letterSpacing = `${-0.04 + (1 - eased) * 0.1}em`
-    })
-
-    if (copy) {
-      const cp = clamp01((p - 0.48) / 0.32)
-      const eased = 1 - (1 - cp) ** 2
-      copy.style.opacity = String(eased)
-      copy.style.transform = `translate3d(0, ${(1 - eased) * 24}px, 0)`
-    }
-  }
-
-  onScroll()
-  window.addEventListener('scroll', onScroll, { passive: true })
-  window.addEventListener('resize', onScroll)
-}
-
-/* ——— Year path with morph ——— */
-const YEAR_BEATS = [
-  {
-    stage: '01 · Theory',
-    title: 'You don’t learn creativity.<br />You become it.',
-    body: 'Zes weken fundament: technieken, immersie in sterk werk, echte client briefings.',
-  },
-  {
-    stage: '02 · Practice',
-    title: 'We build a studio.<br />You build a portfolio.',
-    body: 'Twaalf weken creative studio: briefings, spark days, weekly review op idea én craft.',
-  },
-  {
-    stage: '03 · Drills',
-    title: 'Real agencies.<br />Real Creative Directors.',
-    body: 'Zes weken, zes Belgische agencies. Echte briefing, echte client, echte feedback.',
-  },
-  {
-    stage: '04 · Internship',
-    title: 'Ten weeks inside<br />the industry.',
-    body: 'Stage bij Belgium’s creative agencies. Directors en seniors coachen je portfolio.',
-  },
-  {
-    stage: '05 · Graduation',
-    title: 'Your work on stage.<br />Graduation Night.',
-    body: 'Een jury van professionals beoordeelt je portfolio — en viert het in de spotlight.',
-  },
-]
-
-function initYear() {
-  const section = document.querySelector('[data-year]')
-  const morph = document.querySelector('[data-year-morph]')
-  const stageEl = document.querySelector('[data-year-stage]')
-  const titleEl = document.querySelector('[data-year-title]')
-  const bodyEl = document.querySelector('[data-year-body]')
-  const dots = [...document.querySelectorAll('[data-year-dot]')]
-  const photos = [...document.querySelectorAll('[data-year-photo]')]
-  if (!section || !stageEl || !titleEl || !bodyEl) return
-
-  let current = 0
-  let pending = null
-  let animating = false
-
-  const paint = (index) => {
-    const beat = YEAR_BEATS[index]
-    stageEl.textContent = beat.stage
-    titleEl.innerHTML = beat.title
-    bodyEl.textContent = beat.body
-    dots.forEach((d, i) => d.classList.toggle('is-on', i === index))
-    photos.forEach((p, i) => p.classList.toggle('is-on', i === index))
-  }
-
-  const showResting = () => {
-    if (!morph) return
-    morph.classList.remove('is-leaving', 'is-entering')
-    ;[stageEl, titleEl, bodyEl].forEach((el) => {
-      el.style.opacity = '1'
-      el.style.transform = 'none'
-    })
-  }
-
-  const goTo = (index) => {
-    if (index === current) return
-    if (animating) {
-      pending = index
-      return
-    }
-    if (reducedMotion || !morph) {
-      current = index
-      paint(index)
-      showResting()
-      return
-    }
-
-    animating = true
-    morph.classList.remove('is-entering')
-    morph.classList.add('is-leaving')
-    photos.forEach((p, i) => p.classList.toggle('is-on', i === index))
-
-    window.setTimeout(() => {
-      current = index
-      paint(index)
-      morph.classList.remove('is-leaving')
-      morph.classList.add('is-entering')
-      void morph.offsetWidth
-      requestAnimationFrame(() => {
-        morph.classList.remove('is-entering')
-        showResting()
-        animating = false
-        if (pending !== null && pending !== current) {
-          const next = pending
-          pending = null
-          goTo(next)
-        } else {
-          pending = null
-        }
-      })
-    }, 320)
-  }
-
-  paint(0)
-  showResting()
-
-  if (reducedMotion) return
-
-  const onScroll = () => {
-    const rect = section.getBoundingClientRect()
-    const total = section.offsetHeight - window.innerHeight
-    const p = clamp01((-rect.top) / Math.max(total, 1))
-    const index = Math.min(YEAR_BEATS.length - 1, Math.floor(p * (YEAR_BEATS.length - 0.001)))
-    goTo(index)
-  }
-
-  window.addEventListener('scroll', onScroll, { passive: true })
-  window.addEventListener('resize', onScroll)
-}
-
-function initRolesRail() {
-  const rail = document.querySelector('[data-roles-rail]')
-  const section = document.querySelector('#roles')
-  if (!rail || !section || reducedMotion) return
-
-  const onScroll = () => {
-    const rect = section.getBoundingClientRect()
     const view = window.innerHeight
-    const p = 1 - clamp01(rect.bottom / (view + rect.height))
-    rail.style.transform = `translate3d(${-p * 35}%, 0, 0)`
+    const mid = view * 0.55
+    let best = 0
+    let bestDist = Infinity
+    items.forEach((li, i) => {
+      const r = li.getBoundingClientRect()
+      const dist = Math.abs(r.top + r.height / 2 - mid)
+      if (dist < bestDist) {
+        bestDist = dist
+        best = i
+      }
+    })
+    // also advance by section progress
+    const p = clamp01(1 - (rect.bottom - view * 0.3) / (rect.height + view * 0.4))
+    const byProgress = Math.min(items.length - 1, Math.floor(p * items.length))
+    const index = Math.abs(rect.top) < view ? best : byProgress
+    items.forEach((li, i) => li.classList.toggle('is-hot', i === index))
   }
 
   onScroll()
   window.addEventListener('scroll', onScroll, { passive: true })
 }
 
-function initApplyCount() {
+function initApply() {
   const el = document.querySelector('[data-apply-count]')
   const section = document.querySelector('#apply')
   if (!el || !section || reducedMotion) return
 
   const onScroll = () => {
     const rect = section.getBoundingClientRect()
-    const view = window.innerHeight
-    const p = clamp01(1 - rect.top / view)
-    el.style.transform = `translate3d(${(1 - p) * 4}%, 0, 0) scale(${0.85 + p * 0.28})`
+    const p = clamp01(1 - rect.top / window.innerHeight)
+    el.style.transform = `translate3d(${(1 - p) * 5}%, 0, 0) scale(${0.82 + p * 0.32})`
   }
 
   onScroll()
@@ -304,8 +235,8 @@ function initCounters() {
     }
     const start = performance.now()
     const step = (now) => {
-      const p = clamp01((now - start) / 1200)
-      el.textContent = Math.round(target * (1 - (1 - p) ** 3)).toLocaleString('nl-BE')
+      const p = clamp01((now - start) / 1100)
+      el.textContent = Math.round(target * easeOut(p)).toLocaleString('nl-BE')
       if (p < 1) requestAnimationFrame(step)
     }
     requestAnimationFrame(step)
@@ -327,7 +258,7 @@ function initCounters() {
 
 function initReveals() {
   if (reducedMotion) return
-  const els = document.querySelectorAll('.display, .why__item, .module')
+  const els = document.querySelectorAll('.display, .module')
   const io = new IntersectionObserver(
     (entries) => {
       entries.forEach((entry) => {
@@ -337,11 +268,11 @@ function initReveals() {
         }
       })
     },
-    { threshold: 0.08, rootMargin: '0px 0px -4% 0px' },
+    { threshold: 0.1 },
   )
   els.forEach((el, i) => {
     el.classList.add('reveal')
-    el.style.transitionDelay = `${(i % 6) * 40}ms`
+    el.style.transitionDelay = `${(i % 5) * 40}ms`
     io.observe(el)
   })
 }
@@ -349,8 +280,8 @@ function initReveals() {
 initHero()
 initTrain()
 initYear()
-initRolesRail()
-initApplyCount()
+initRoles()
+initApply()
 initModules()
 initCounters()
 initReveals()
